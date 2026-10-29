@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>신탄진 생존기</title>
+<style>
+:root{--bg:#f2efe8;--fg:#14120f;--mut:#5f594f;--card:#fff;--bd:#bdb5a5;--ac:#b3261e;--acfg:#fff;--ok:#1b7a3a;--no:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0d0b;--fg:#f4f0e6;--mut:#aaa393;--card:#1c1a16;--bd:#4a443a;--ac:#ff6a5c;--acfg:#0e0d0b;--ok:#5fd68a;--no:#ff7a6e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0d0b;--fg:#f4f0e6;--mut:#aaa393;--card:#1c1a16;--bd:#4a443a;--ac:#ff6a5c;--acfg:#0e0d0b;--ok:#5fd68a;--no:#ff7a6e;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;line-height:1.75;-webkit-text-size-adjust:100%}
+main{max-width:560px;margin:0 auto;padding:14px 16px 40px}
+.top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.top b{font-size:18px;letter-spacing:.02em}
+.top span{font-size:15px;color:var(--mut);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.st{background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:8px 6px;text-align:center}
+.st small{display:block;font-size:13px;color:var(--mut);font-weight:700}
+.st strong{font-size:26px;line-height:1.2}
+.bar{height:6px;background:var(--bd);border-radius:3px;margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ac)}
+.party{display:flex;flex-wrap:wrap;gap:6px;min-height:30px;margin-bottom:12px}
+.chip{font-size:14px;font-weight:700;padding:2px 11px;border:2px solid var(--fg);border-radius:99px}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:18px 16px;margin-bottom:14px}
+.tag{font-size:13px;font-weight:800;color:var(--ac);letter-spacing:.06em;margin-bottom:6px}
+.story{font-size:18px;margin:0;white-space:pre-line}
+.delta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.delta span{font-size:15px;font-weight:800;padding:2px 10px;border-radius:8px;border:2px solid currentColor}
+.up{color:var(--ok)}.dn{color:var(--no)}
+.ch{display:block;width:100%;text-align:left;font:inherit;font-size:17px;font-weight:700;color:var(--fg);background:var(--card);border:2px solid var(--fg);border-radius:12px;padding:15px 16px;margin-bottom:10px;cursor:pointer}
+.ch:active{background:var(--ac);color:var(--acfg);border-color:var(--ac)}
+.go{background:var(--ac);color:var(--acfg);border-color:var(--ac);text-align:center}
+.end .tag{font-size:15px}
+html:root:not([data-theme="zz"]){--bg:#070a07;--fg:#e8efe2;--mut:#93a58a;--card:#101510;--bd:#2b3a2b;--ac:#d4281e;--acfg:#fff;--ok:#7be08a;--no:#ff5a4d;color-scheme:dark}
+body{background:radial-gradient(ellipse at 50% 0,#1c2e15 0,#070a07 62%) fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:5;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.75) 100%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:6;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px);animation:fl 5s infinite}
+@keyframes fl{0%,100%{opacity:1}48%{opacity:.75}50%{opacity:1}52%{opacity:.5}}
+.top{gap:8px}.top b{color:var(--ac);text-shadow:0 0 8px rgba(212,40,30,.7);animation:fl 6s infinite}
+.card{border-color:#3a2a2a;border-top:4px solid var(--ac);box-shadow:0 0 18px rgba(212,40,30,.18)}
+.ch{background:#141b14;border-color:#3d523d}
+.chip.it{background:#1a221a;color:var(--fg);font:inherit;font-size:14px;font-weight:700;cursor:pointer}
+#snd{background:var(--card);border:2px solid var(--bd);color:var(--fg);border-radius:10px;font-size:16px;padding:2px 8px;cursor:pointer}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));background:#000;color:#fff;border:2px solid var(--ac);padding:8px 14px;border-radius:10px;opacity:0;transition:opacity .3s;z-index:9;pointer-events:none;font-weight:700;text-align:center}
+.art{display:block;width:100%;height:auto;border-radius:10px;margin-bottom:12px;border:2px solid var(--bd)}
+body.hit::before{background:radial-gradient(ellipse at center,rgba(212,40,30,.25) 20%,rgba(160,0,0,.85) 100%)}
+body.hit main{animation:shk .4s}
+@keyframes shk{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+@media (prefers-reduced-motion:reduce){body::after,.top b{animation:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><b>🧟 신탄진 생존기</b><span id="day"></span><button id="snd">🔇</button></div>
+<div class="stats" id="stats"></div>
+<div class="party" id="party"></div>
+<div class="party" id="items"></div>
+<div id="view"></div><div id="toast"></div>
+</main>
+<script>
+var S,$=function(i){return document.getElementById(i)};
+var cl=function(v){return Math.max(0,Math.min(10,v))};
+var R=function(p){return Math.random()<Math.min(.95,p+.1)};
+var has=function(n){return S.p.indexOf(n)>-1};
+var g=function(h,m,f){if(h<-1)h++;if(m<-2)m++;S.hp=cl(S.hp+h);S.mind=cl(S.mind+m);S.food=Math.max(0,Math.min(12,S.food+f))};
+var join=function(n){if(!has(n)){S.p.push(n);PK=n}};
+var sh=function(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a};
+var zd=function(n){if((has("김병준")||has("강태리"))&&Math.random()<.4)n=Math.max(0,n-1);if(S.job==="군인")n=Math.max(0,n-S.jl);if(S.job==="사냥꾼")n=Math.max(0,n-1);return (has("이영진")&&Math.random()<.4)?0:(has("필백")&&Math.random()<.4?Math.max(0,n-1):n)};
+
+var PRO="2026년 늦가을, 대전 신탄진.\n\n여느 때와 다름없던 아침이었다. 어느 날 갑자기 사이렌이 울리고, 사람들이 사람을 물어뜯기 시작했다.\n\n좀비가 창궐했다.\n\n뉴스는 끊겼고 전화는 먹통이다. 살아남으려면 움직여야 한다.";
+
+var STARTS=[
+{t:"자취방. 문밖에서 비명이 들린다. 냉장고엔 라면 몇 봉지가 있다.",c:[
+ ["라면을 챙겨 현관으로 나간다",function(){g(0,0,2);return "라면을 가방에 쑤셔 넣고 조용히 계단을 내려갔다."}],
+ ["창문 밖 가스관을 타고 내려간다",function(){g(-1,1,0);return "무릎이 까졌지만 아무에게도 들키지 않았다."}],
+ ["이불을 뒤집어쓰고 하루 버틴다",function(){g(0,-1,-1);return "밤새 벽을 긁는 소리를 들었다. 잠은 못 잤다."}]]},
+{t:"편의점 야간 알바 중이다. 유리문 너머로 사람들이 비틀거리며 걸어온다.",c:[
+ ["셔터를 내리고 진열대를 턴다",function(){g(0,0,3);return "삼각김밥과 생수를 쓸어 담았다."}],
+ ["빗자루를 들고 정문을 막는다",function(){g(-2,2,1);return "한 마리를 쓰러뜨렸지만 팔을 긁혔다."}],
+ ["창고에 숨는다",function(){g(0,-1,1);return "어둠 속에서 숨을 죽였다. 그나마 과자 상자를 찾았다."}]]},
+{t:"신탄진역 대합실. 열차가 멈췄고, 승객들이 서로 밀치며 출구로 몰린다.",c:[
+ ["인파를 따라 같이 뛴다",function(){g(-2,0,0);return "넘어진 사람을 밟고 지나갔다. 마음이 무겁다."}],
+ ["역무실로 숨어든다",function(){g(0,0,2);return "역무원의 도시락과 물이 남아 있었다."}],
+ ["철길로 내려가 걷는다",function(){g(-1,2,0);return "레일을 따라 걸으니 오히려 마음이 가라앉았다."}]]},
+{t:"공장 야근 중이었다. 기계가 멈추고, 라인 반대편에서 이상한 신음이 들린다.",c:[
+ ["안전모와 렌치를 챙긴다",function(){g(1,1,0);return "묵직한 렌치가 손에 익었다. 용기가 났다."}],
+ ["식당으로 달려간다",function(){g(0,0,3);return "배식대 밑에서 통조림 박스를 건졌다."}],
+ ["옥상으로 올라간다",function(){g(0,1,0);return "신탄진 전체가 내려다보인다. 연기가 곳곳에서 솟는다."}]]},
+{t:"대청호 근처 드라이브 중이었다. 라디오는 지직거리고, 앞 차가 급정거했다.",c:[
+ ["트렁크의 비상식량을 챙겨 내린다",function(){g(0,0,3);return "캠핑용 식량이 트렁크에 있었다."}],
+ ["차를 버리고 숲으로 뛴다",function(){g(-1,0,0);return "나뭇가지에 얼굴이 긁혔지만 뒤따라오는 건 없다."}],
+ ["경적을 눌러 주의를 끈다",function(){g(-2,-1,0);return "좀비가 우르르 몰려왔다. 간신히 빠져나왔다."}]]}
+];
+
+var EV=[
+{t:"폐업한 주점 앞. 황진수가 소주병을 흔든다.\n“어이, 한잔 받고 가. 내기 한 판 어때?”",c:[
+ ["내기에 응한다",function(){if(R(.5)){g(0,2,2);return "이겼다! 황진수가 안주와 술을 내놓았다."}g(-1,-1,0);return "졌다. 벌주를 마시고 속이 뒤집혔다."}],
+ ["술만 받아 마신다",function(){g(0,2,0);return "한 잔에 마음이 풀렸다. 오랜만에 웃었다."}],
+ ["거절하고 지나간다",function(){return "황진수가 혀를 차며 손을 흔들었다."}]]},
+{t:"깨진 유리창의 미용실. 심국보가 가위를 들고 서 있다.\n“머리가 그게 뭐냐. 앉아 봐.”",c:[
+ ["머리를 맡긴다",function(){g(0,3,0);return "싹둑싹둑. 거울 속의 내가 사람 같아 보인다."}],
+ ["식량 한 끼를 건네고 맡긴다",function(){g(0,4,-1);return "심국보가 고맙다며 어깨까지 주물러 줬다."}],
+ ["지나친다",function(){return "심국보는 허공에 가위질을 하며 중얼거렸다."}]]},
+{t:"야구방망이를 든 필백이 길을 막고 선다.\n“혼자는 힘들잖아. 같이 가자.”",c:[
+ ["동료로 받아들인다",function(){join("필백");g(0,2,0);return "필백이 합류했다. 좀비 피해가 줄어든다."}],
+ ["혼자 가겠다고 한다",function(){g(0,-1,0);return "필백은 어깨를 으쓱하고 돌아섰다."}]]},
+{t:"통조림 앞에서 박광현이 으르렁거린다.\n“이거 내 거야! 건드리지 마!”",c:[
+ ["절반을 나눠 준다",function(){g(0,1,1);return "박광현이 의외로 순순히 물러났다."}],
+ ["힘으로 빼앗는다",function(){S.bg=1;if(R(.5)){g(0,0,3);return "몸싸움 끝에 통조림을 챙겼다."}g(-3,-1,0);return "턱을 얻어맞고 나가떨어졌다."}],
+ ["말로 달랜다",function(){if(R(.4)){g(0,1,2);return "“같이 먹자.” 말이 통했다."}g(0,-1,0);return "소용없었다. 욕만 먹었다."}]]},
+{t:"좀비 앞에서 이영진이 팔을 휘두르며 소리친다.\n“야, 이 좀비 놈들아! 이쪽이다!”",c:[
+ ["같이 다닌다",function(){join("이영진");g(0,1,0);return "이영진이 합류했다. 좀비를 끄는 건 그의 몫이다."}],
+ ["어그로가 끌린 틈에 창고를 턴다",function(){g(0,-1,3);return "식량은 챙겼지만 영진의 비명이 오래 들렸다."}]]},
+{t:"문형준이 다짜고짜 멱살을 잡는다.\n“한판 붙자. 못 이기면 못 지나가.”",c:[
+ ["바로 맞짱 뜬다",function(){if(R(has("필백")?.7:.5)){join("문형준");g(-1,1,0);return "주먹다짐 끝에 문형준이 웃었다. “인정. 같이 간다.”"}g(-3,-1,0);return "코피가 터졌다. 완패다."}],
+ ["도망친다",function(){g(0,-2,0);return "등 뒤에서 비웃음이 들렸다."}]]},
+{t:"멈춘 승용차 옆에 유대현이 쪼그려 앉아 있다.\n“연료만 있으면 이 차 달려. 같이 갈래?”",c:[
+ ["동료가 된다",function(){join("유대현");g(0,2,-1);return "유대현이 합류했다. 마지막에 큰 힘이 될 것이다."}],
+ ["거절한다",function(){return "유대현은 다시 보닛을 열었다."}]]},
+{t:"원숭이 한 마리가 지붕 위에서 바나나 껍질을 던진다. 목걸이에 ‘양희민’이라 적혀 있다.",c:[
+ ["먹을 것을 건넨다",function(){g(0,0,-1);if(R(.5)){join("양희민");g(0,2,0);return "양희민이 어깨에 올라탔다. 길들였다!"}g(-1,-1,0);return "손만 물리고 도망갔다."}],
+ ["쫓아낸다",function(){return "양희민은 찍찍거리며 사라졌다."}]]},
+{t:"짐 보따리를 끙끙 끌던 탁건이 졸졸 따라온다.\n“형, 나 좀 데려가 주면 안 돼?”",c:[
+ ["짐을 나눠 들고 받아 준다",function(){join("탁건");g(0,1,3);return "탁건의 짐 속에 식량이 있었다. 대신 매일 더 먹는다."}],
+ ["무시한다",function(){g(0,-1,0);return "탁건의 훌쩍이는 소리가 한참 따라왔다."}]]},
+{t:"편의점이 통째로 비어 있다. 문이 반쯤 열려 있다.",c:[
+ ["정문으로 당당히 들어간다",function(){if(R(.6)){g(0,0,3);return "선반에 식량이 남아 있었다."}g(-zd(2),0,0);return "안에 좀비가 있었다!"}],
+ ["뒷문으로 조심스럽게 들어간다",function(){g(0,-1,2);return "시간이 걸렸지만 안전하게 챙겼다."}]]},
+{t:"신탄진역 앞, 좀비 떼가 광장을 가득 메웠다.",c:[
+ ["건물 사이에 숨는다",function(){if(R(.6))return "숨을 죽이자 무리가 지나갔다.";g(-zd(3),0,0);return "들켰다! 뛰어서 간신히 빠져나왔다."}],
+ ["전력으로 돌파한다",function(){g(-zd(2),1,0);return zd(2)?"몸을 던져 돌파했다.":"이영진이 어그로를 끌어 준 덕분에 무사했다."}]]},
+{t:"문 닫은 약국. 셔터 틈으로 약 상자가 보인다.",c:[
+ ["셔터를 비틀어 연다",function(){g(3,0,0);return "붕대와 진통제를 찾았다."}],
+ ["위험해 보여 포기한다",function(){g(0,-1,0);return "발길을 돌렸다."}]]},
+{t:"금강 변. 강물이 잔잔하다. 낚싯대가 버려져 있다.",c:[
+ ["낚시를 한다",function(){if(R(.6)){g(0,2,3);return "붕어 몇 마리를 낚았다!"}g(0,1,0);return "허탕. 그래도 마음은 편해졌다."}],
+ ["강변을 따라 걷는다",function(){g(0,1,0);return "물소리를 들으며 걸었다."}]]},
+{t:"라디오에서 지직거리는 소리가 흘러나온다.\n“…대전 방면… 군 대피소… 생존자…”",c:[
+ ["끝까지 귀를 기울인다",function(){g(0,3,0);return "희망이 생겼다. 대전 쪽이 열쇠일지도 모른다."}],
+ ["배터리 아끼려 끈다",function(){g(0,-1,0);return "다시 정적. 불안만 커졌다."}]]},
+{t:"버려진 주유소. 펌프는 말랐지만 지하 탱크 뚜껑이 보인다.",c:[
+ ["뚜껑을 열고 기름을 퍼 올린다",function(){if(R(.6)){S.fuel=1;g(0,1,0);return "기름을 찾았다. 차가 있다면 달릴 수 있다."}g(-zd(2),0,0);return "소리를 듣고 좀비가 몰려왔다."}],
+ ["지나친다",function(){return "주유소는 조용히 멀어졌다."}]]},
+{t:"대형마트 지하. 식품 코너가 통째로 남아 있다. 그런데 너무 어둡다.",c:[
+ ["더듬더듬 안으로 들어간다",function(){if(R(.5)){g(0,0,4);return "카트 가득 식량을 담았다!"}g(-zd(3),0,1);return "어둠 속에서 뭔가 덮쳤다. 겨우 빠져나왔다."}],
+ ["입구 근처만 훑는다",function(){g(0,0,2);return "안전하게 몇 가지만 챙겼다."}]]},
+{t:"초등학교 교실 창문에서 아이들이 손을 흔든다. 모두 배고파 보인다.",c:[
+ ["식량을 나눠 준다",function(){g(0,3,-2);return "아이들이 환하게 웃었다. 마음이 따뜻해졌다."}],
+ ["외면하고 지나간다",function(){g(0,-2,0);return "등 뒤의 시선이 오래 따가웠다."}]]},
+{t:"경찰서 책상 위에 무기고 열쇠가 놓여 있다.",c:[
+ ["무기고를 연다",function(){if(R(.5)){g(1,2,0);return "삼단봉과 방패를 챙겼다. 든든하다."}g(-zd(3),0,0);return "경보가 울려 좀비가 몰려왔다!"}],
+ ["건드리지 않는다",function(){return "괜히 건드리지 않기로 했다."}]]},
+{t:"교회 안의 피난민들이 문을 열어줄지 망설이고 있다.",c:[
+ ["하룻밤 신세를 진다",function(){g(2,2,-2);return "따뜻한 국물과 잠자리를 얻었다."}],
+ ["그냥 지나간다",function(){return "서로 말없이 눈인사만 했다."}]]},
+{t:"멀리서 헬기 소리가 들린다. 연기 신호를 피울 수 있다.",c:[
+ ["타이어를 태워 신호를 보낸다",function(){if(R(.3)){g(0,4,0);return "헬기가 한 바퀴 돌았다! 누군가 우릴 보고 있다."}g(-1,-1,0);return "헬기는 멀어졌고, 연기에 좀비가 몰려왔다."}],
+ ["조용히 숨어 지켜본다",function(){g(0,-1,0);return "헬기는 그대로 사라졌다."}]]},
+{ok:function(){return S.bg},t:"박광현이 패거리를 끌고 나타났다.\n“아까 일 갚으러 왔다!”",c:[
+ ["식량을 건네며 사과한다",function(){g(0,-1,-2);return "박광현이 코웃음 치며 물러났다."}],
+ ["정면으로 맞선다",function(){if(R(.5)){g(0,2,2);return "기세에 눌린 패거리가 흩어졌다. 식량도 얻었다."}g(-4,-1,0);return "여럿에게 두들겨 맞았다."}]]},
+{ok:function(){return has("유대현")},t:"유대현이 낡은 트럭을 가리킨다.\n“여기 탱크에서 기름을 뽑아 보자.”",c:[
+ ["같이 호스를 문다",function(){if(R(.7)){S.fuel=1;g(0,1,0);return "연료 확보! 입안이 쓰지만 보람 있다."}g(-1,0,0);return "기름이 거의 없었다. 헛수고였다."}],
+ ["위험하니 말린다",function(){return "유대현은 아쉬운 표정으로 보닛을 닫았다."}]]},
+{ok:function(){return has("필백")&&has("문형준")},t:"필백과 문형준이 누가 선두에 설지로 멱살을 잡았다.",c:[
+ ["사이에 끼어 말린다",function(){g(-1,-1,0);return "둘 다 머쓱해졌지만 내 옆구리만 멍들었다."}],
+ ["누가 이길지 내기를 건다",function(){g(0,2,-1);return "한바탕 웃고 나니 분위기가 풀렸다."}]]},
+{ok:function(){return has("이영진")},t:"좀비 수십 마리가 골목을 막았다. 이영진이 씩 웃는다.\n“내가 끌게. 먼저 가.”",c:[
+ ["영진에게 맡기고 달린다",function(){rm("이영진");g(0,-3,3);return "영진은 돌아오지 않았다. 대신 식량이 남았다."}],
+ ["끝까지 함께 싸운다",function(){g(-3,2,0);return "영진과 등을 맞대고 길을 뚫었다."}]]},
+{ok:function(){return has("탁건")&&has("양희민")},t:"양희민이 탁건의 짐을 뒤져 과자를 훔쳐 달아났다.",c:[
+ ["웃어넘긴다",function(){g(0,3,0);return "탁건이 울상으로 원숭이를 쫓아다닌다. 오랜만에 크게 웃었다."}],
+ ["원숭이를 혼낸다",function(){g(0,-1,1);return "과자를 되찾았다. 분위기는 어색하다."}]]},
+{ok:function(){return has("탁건")},t:"탁건이 짐 속에서 낡은 보드게임을 꺼냈다.\n“형, 한 판만 하자.”",c:[
+ ["한 판 한다",function(){g(0,3,0);return "잠깐이나마 세상이 평화로웠다."}],
+ ["시간 없다고 거절한다",function(){g(0,-1,0);return "탁건이 시무룩하게 짐을 쌌다."}]]},
+{ok:function(){return S.p.length>=3},t:"저녁, 폐공장 모닥불 둘레에 동료들이 둘러앉았다.",c:[
+ ["식량을 풀어 회식을 연다",function(){g(2,4,-2);return "웃음소리가 밤새 이어졌다. 모두 힘을 얻었다."}],
+ ["식량을 아끼자고 한다",function(){g(0,-1,0);return "다들 조용히 눈을 붙였다."}]]},
+{t:"비가 쏟아진다. 마침 버려진 버스 정류장이 있다.",c:[
+ ["하룻밤 푹 쉰다",function(){g(3,1,-1);return "오랜만에 깊이 잤다."}],
+ ["비를 맞으며 계속 걷는다",function(){g(-1,-1,0);return "몸이 으슬으슬 떨렸다."}]]}
+];
+
+var E={
+car:["🚗 탈출 엔딩","유대현이 시동을 걸었다. 기름은 바닥이었지만 대전까지는 충분했다.\n\n군 대피소 철문이 열린다. “생존자다!” 신탄진의 악몽이 룸미러 속으로 멀어진다."],
+boat:["🚤 도강 엔딩","금강 위로 작은 배를 띄웠다. 노를 저을수록 좀비의 소리가 멀어진다.\n\n건너편 둑에서 누군가 손을 흔든다. 우리는 살아남았다."],
+sunk:["🌊 침몰 엔딩","배는 강 한복판에서 물이 새기 시작했다. 필사적으로 물을 퍼냈지만 소용없었다.\n\n강물은 차갑고, 조용했다."],
+fort:["🏰 신탄진 요새 엔딩","동료들과 함께 폐공장에 바리케이드를 쌓았다. 밤마다 번갈아 보초를 서며 버텼다.\n\n몇 달 뒤, 헬기 소리가 들렸다. 우리가 지킨 신탄진에서 구조대를 맞이했다."],
+mk:["🐵 원숭이의 신호 엔딩","양희민이 옥상 철탑으로 올라가 빨간 깃발을 흔들었다. 하늘에서 헬기가 방향을 틀었다.\n\n인류를 구한 건 원숭이였다."],
+alone:["🕯 고립 엔딩","혼자 버티기엔 신탄진이 너무 넓었다. 밤이 되자 창문이 하나둘 깨지기 시작했다.\n\n등을 맞대고 지켜 줄 사람이 없었다."],
+walk:["🚶 방랑 엔딩","차도 동료도 없이 걷고 또 걸었다. 몸은 만신창이였지만 계속 걸었다.\n\n어딘가 사람이 있는 곳이 나올 때까지."],
+walkd:["💀 쓰러짐 엔딩","체력이 바닥난 채 걷다가 도로 위에 주저앉았다. 눈을 감자 바람 소리만 남았다."],
+stall:["⛽ 기름 바닥 엔딩","유대현의 차는 몇 킬로 못 가 멈췄다. 연료를 구하지 못한 대가다.\n\n우리는 차를 버리고 걸었다. 뒤에서 신음 소리가 점점 가까워졌다."],
+hp:["💀 사망 엔딩","더는 버틸 수 없었다. 몸이 말을 듣지 않았다. 신탄진의 어둠이 모든 걸 덮었다."],
+mind:["🌀 광기 엔딩","웃음이 터졌다. 멈출 수 없었다. 좀비들 사이로 나는 노래를 부르며 걸어갔다."]
+};
+
+function fx(l,h,m,f,t,fn){return [l,function(){g(h,m,f);if(fn)fn();return t}]}
+EV.push(
+{t:'지붕 위에서 고양이가 야옹 운다. 목걸이엔 ‘나비’.',c:[fx('참치캔을 연다',0,2,-1,'나비가 무릎에 올라탔다. 동료가 됐다!',function(){join('나비')}),fx('지나친다',0,0,0,'나비는 하품했다.')]},
+{t:'폐업한 노래방. 전원이 들어온다! 마이크가 켜져 있다.',c:[fx('한 곡 뽑는다',-1,4,0,'좀비들이 박수 치듯 몰려왔지만 속은 뻥 뚫렸다.'),fx('마이크를 내려놓는다',0,0,0,'정적이 돌아왔다.')]},
+{t:'PC방 모니터에 채팅창이 떠 있다. “살아있는 사람?”',c:[fx('“여기 있음” 입력',0,3,0,'답장이 왔다. 어딘가에 사람이 있다.'),fx('전원을 뽑는다',0,-1,0,'이상하게 허전했다.')]},
+{t:'컵라면 진열대가 통째로 남아 있고 정수기엔 온수가 있다!',c:[fx('먹방부터 한다',0,3,-1,'국물에 눈물이 났다.'),fx('가방에 쓸어 담는다',0,0,3,'컵라면을 한가득 챙겼다.')]},
+{t:'아파트 베란다에서 누가 불꽃놀이 세트를 흔든다. “터뜨릴까요?”',c:[['터뜨린다',function(){if(R(.6)){g(0,2,2);return '좀비가 불꽃을 쫓아갔다. 틈에 물자를 털었다.'}g(-3,0,0);return '불꽃에 좀비가 몰려왔다!'}],fx('말린다',0,0,0,'조용히 길을 돌았다.')]},
+{t:'포장마차에 소주와 어묵국이 그대로 있다.',c:[fx('한잔 걸친다',1,3,1,'속이 따뜻하다. 취기가 올랐다.',function(){S.dr++}),fx('국물만 마신다',1,1,1,'어묵국이 속을 풀어줬다.')]},
+{t:'황진수가 또 나타났다. “가위바위보 한 판! 진 사람이 벌주!”',c:['✌ 가위','✊ 바위','✋ 보'].map(function(n,i){return [n,function(){var o=Math.floor(Math.random()*3),r=(i-o+3)%3;if(r==1){g(0,3,1);return '이겼다! 황진수가 안주를 내놓았다.'}if(r==2){S.dr++;g(-1,-1,0);return '졌다. 벌주 한 잔.'}g(0,1,0);return '비겼다. 어색하게 웃었다.'}]})},
+{t:'폐양조장. 막걸리 통이 줄지어 서 있다.',c:[fx('한 통 마신다',0,3,0,'세상이 핑 돈다. 기분은 최고!',function(){S.dr++}),fx('냄새만 맡는다',0,1,0,'향이 좋다. 참았다.')]},
+{t:'부서진 구급차 안에 신호탄 상자가 있다.',c:[fx('챙긴다',0,1,0,'헬기가 오면 쓸 수 있다.',function(){S.sig=1}),fx('두고 간다',0,0,0,'무겁다.')]},
+{t:'맨홀 아래 군용 지하 벙커 표지. 뚜껑이 열려 있다.',c:[['내려가 본다',function(){if(R(.6)){S.bunker=1;g(2,2,3);return '비상식량과 침대. 안전한 벙커다!'}g(-3,-1,0);return '좀비가 먼저 와 있었다!'}],fx('닫고 도망간다',0,-1,0,'뚜껑을 닫았다.')]},
+{t:'사냥꾼의 오두막. 벽에 산탄총이 걸려 있다.',c:[fx('가져간다',0,2,0,'묵직한 산탄총을 챙겼다.',function(){S.gun=1}),fx('두고 간다',0,0,0,'총은 무섭다.')]},
+{t:'아파트 계단에서 여자아이가 울고 있다. 엄마를 찾는단다.',c:[fx('데리고 간다',0,3,-1,'아이가 손을 꼭 잡았다.',function(){S.kind++}),fx('식량만 쥐여 준다',0,-1,-1,'아이의 눈이 오래 남았다.')]},
+{t:'무전기에서 낯선 목소리. “…아직 살아 있어요?” 밤새 이야기를 나눴다.',c:[fx('다시 만나자고 약속한다',0,4,0,'이 목소리를 지키고 싶어졌다.',function(){S.lv=1}),fx('무전기를 끈다',0,-2,0,'왜인지 눈물이 났다.')]},
+{t:'좀비 새끼 같은 것이 발목을 물었다! 피가 난다.',c:[fx('소독하고 붕대를 감는다',-2,0,0,'응급 처치. 불안하다.',function(){S.bite=1}),fx('신경 안 쓴다',-1,-1,0,'몸이 점점 무겁다.',function(){S.bite=1})]},
+{ok:function(){return S.bite},t:'구급상자 속에 항생제가 있다.',c:[fx('약을 먹는다',1,2,0,'열이 가라앉았다. 감염을 막았다!',function(){S.bite=0}),fx('아껴둔다',0,-1,0,'증상이 심해진다.')]},
+{ok:function(){return has('유대현')},t:'유대현이 버려진 버스를 가리킨다. “이걸로 길을 뚫자!”',c:[['운전대를 맡긴다',function(){if(R(.6)){g(0,3,0);return '버스로 좀비 떼를 가르며 질주했다!'}g(-3,0,0);return '버스가 전복됐다.'}]]},
+{ok:function(){return has('나비')},t:'나비가 쥐를 물어왔다. 자랑스러운 표정이다.',c:[fx('쓰다듬어 준다',0,3,0,'가르릉거린다.')]},
+{ok:function(){return S.p.length>=2},t:'밤하늘이 유난히 맑다. 동료들이 조용히 별을 본다.',c:[fx('옛날 얘기를 나눈다',0,4,0,'함께라서 다행이다.'),fx('보초를 선다',0,0,0,'밤새 평화로웠다.')]},
+{t:'쓰러진 간판. ‘원조 신탄진 국밥’.',c:[fx('국밥집을 뒤진다',0,2,2,'가마솥 바닥에 밥이 남아 있었다.'),fx('지나간다',0,-1,0,'배가 꼬르륵거린다.')]}
+);
+Object.assign(E,{
+zombie:['🧟 좀비화 엔딩','상처가 욱신거리더니 시야가 붉어졌다. 마지막 기억은 동료의 비명이다.'],
+convoy:['🚙 호송대 엔딩','동료들을 가득 태운 차가 대전으로 달렸다. 뒤따르는 차들이 점점 늘었다.'],
+trip:['🐒 원숭이 로드트립 엔딩','양희민이 조수석에서 지도를 짚는다. 이상하게 길을 잘 안다.'],
+calm:['🌅 평온한 항해 엔딩','마음이 고요하자 강물도 고요했다. 해가 뜨는 쪽으로 배는 흘러갔다.'],
+mkboat:['🐵 원숭이 선장 엔딩','양희민이 키를 잡자 배는 기적처럼 급류를 건넜다.'],
+tak:['⚓ 짐덩이 침몰 엔딩','탁건의 짐이 배를 무겁게 했다. “형, 미안…” 물이 차올랐다.'],
+allstar:['🌟 올스타 엔딩','동료만 여섯. 신탄진 요새는 대전에서 가장 시끄럽고 가장 안전한 마을이 되었다.'],
+fighter:['🥊 격투왕 엔딩','필백의 방망이와 문형준의 주먹. 신탄진엔 다시는 좀비가 얼씬 못했다.'],
+snipe:['🎯 저격수 엔딩','옥상에서 산탄총이 불을 뿜었다. 신탄진의 수호신이 되었다.'],
+family:['👨‍👧 새 가족 엔딩','아이가 “아빠”라고 불렀다. 세상은 끝났지만 집이 생겼다.'],
+romance:['💌 무전기 사랑 엔딩','무전기 목소리의 주인이 신탄진 철문을 두드렸다. 만나서 반갑습니다.'],
+hoard:['🍚 식량 부자 엔딩','창고가 식량으로 가득하다. 신탄진 최초의 식당이 문을 열었다.'],
+hermit:['🧘 은둔자 엔딩','혼자여도 평온했다. 책을 읽고 차를 마시며 세상이 끝나기를 기다린다.'],
+legend:['🏆 전설 엔딩','몸도 마음도 완벽했다. 대피소 사람들이 신탄진의 전설이라 불렀다.'],
+shelter:['⛺ 대피소 도착 엔딩','대피소 철문이 열렸다. 따뜻한 수프 한 그릇에 눈물이 났다.'],
+shelter2:['🏥 격리 엔딩','대피소엔 도착했지만 상처투성이라 2주 격리됐다. 그래도 살았다.'],
+heli:['🚁 헬기 구조 엔딩','신호탄이 하늘을 붉게 물들였다. 헬기가 선회하며 밧줄을 내렸다.'],
+bunker:['🕳 벙커 엔딩','두꺼운 철문 안은 조용했다. 몇 년을 버틸 식량이 있다.'],
+drunk:['🍶 술독 엔딩','세상이 끝났는데 기분은 최고다. 황진수와 어깨동무하고 노래하며 좀비 사이를 걸었다.']
+});
+function rq(l,p,a,b,ta,tb){return [l,function(){if(R(p)){g(a[0],a[1],a[2]);return ta}g(b[0],b[1],b[2]);return tb}]}
+var IC={붕대:'🩹',통조림:'🥫',소주:'🍶',손전등:'🔦',라이터:'🔥',호루라기:'📯',쇠지렛대:'🔧'};
+var US={붕대:[3,0,0,'붕대를 감았다. 체력 +3'],통조림:[0,0,2,'통조림을 먹었다. 식량 +2'],소주:[0,2,0,'소주 한 모금. 정신력 +2']};
+function gi(n,c){S.it[n]=(S.it[n]||0)+(c||1)}
+function toast(t){var e=$('toast');e.textContent=t;e.style.opacity=1;clearTimeout(toast.h);toast.h=setTimeout(function(){e.style.opacity=0},1900)}
+function items(){var h='';for(var k in S.it)if(S.it[k]>0)h+='<button class="chip it" data-k="'+k+'" onclick="useIt(this.dataset.k)">'+(IC[k]||'')+k+' ×'+S.it[k]+'</button>';h=jc()+h;$('items').innerHTML=h||'<span style="color:var(--mut);font-size:14px">아이템 없음</span>'}
+function useIt(k){var u=US[k];if(!u){toast(k+'은(는) 이벤트에서 쓸 수 있어요');return}S.it[k]--;g(u[0],u[1],u[2]);stats();toast(u[3])}
+function ui(n,l,h,m,f,t,keep){var c=[IC[n]+' '+n+' · '+l,function(){if(!keep)S.it[n]--;g(h,m,f);return t}];c.show=function(){return S.it[n]>0};return c}
+EV.push(
+{t:'동네 약국. 서랍 깊숙이 약품이 남아 있다.',c:[fx('붕대를 챙긴다',0,1,0,'붕대 2개를 얻었다.',function(){gi('붕대',2)}),fx('그냥 간다',0,0,0,'시간이 없다.')]},
+{t:'철물점 진열대에 공구가 가득하다.',c:[fx('쇠지렛대와 손전등을 챙긴다',0,2,0,'🔧쇠지렛대, 🔦손전등 획득!',function(){gi('쇠지렛대');gi('손전등')}),fx('지나친다',0,0,0,'발길을 돌렸다.')]},
+{t:'호루라기와 라이터가 든 상자가 길가에 떨어져 있다.',c:[fx('둘 다 챙긴다',0,1,0,'📯호루라기와 🔥라이터를 얻었다.',function(){gi('호루라기');gi('라이터')})]},
+{t:'낙하산 달린 보급 상자가 지붕에 걸려 있다!',c:[fx('끌어내린다',0,3,3,'통조림과 붕대를 얻었다!',function(){gi('통조림',2);gi('붕대')})]},
+{t:'편의점 냉장고 뒤에 소주 박스가 숨어 있다.',c:[fx('챙긴다',0,1,0,'소주 2병을 얻었다.',function(){gi('소주',2)})]},
+{t:'어두운 터널. 반대편에서 희미한 빛이 보인다.',c:[ui('손전등','비추며 건넌다',0,2,2,'터널 안 보급품까지 챙겼다.',1),rq('더듬어서 건넌다',.4,[0,0,1],[-3,-1,0],'운 좋게 무사히 건넜다.','어둠 속 좀비에게 물어뜯겼다!'),fx('우회한다',0,-1,0,'먼 길을 돌았다.')]},
+{t:'잠긴 대형 창고. 안에서 뭔가 부스럭거린다.',c:[ui('쇠지렛대','문을 비튼다',0,1,4,'창고 안은 식량 천국이었다!',1),fx('문을 두드린다',-2,-1,0,'소리에 좀비가 몰려왔다!'),fx('포기한다',0,-1,0,'아쉽다.')]},
+{t:'좀비 한 무리가 골목을 막았다.',c:[ui('호루라기','불어서 유인한다',0,1,2,'좀비들이 소리를 쫓아갔다. 길이 열렸다!',1),rq('몰래 지나간다',.4,[0,1,0],[-3,-1,0],'숨죽이고 지나갔다.','들켰다!')]},
+{t:'영하의 밤. 온몸이 덜덜 떨린다.',c:[ui('라이터','모닥불을 피운다',2,2,-1,'따뜻하다. 오랜만에 눈을 붙였다.'),fx('이불 삼아 버틴다',-2,-1,0,'밤새 이를 악물었다.')]},
+{t:'다리를 다친 생존자가 도움을 청한다.',c:[ui('붕대','치료해 준다',0,4,2,'생존자가 눈물로 감사하며 식량을 나눠 줬다.'),fx('외면한다',0,-3,0,'비명이 등 뒤에 남았다.')]},
+{t:'약탈자 무리가 길을 막는다. “가진 거 다 내놔.”',c:[rq('맞서 싸운다',.4,[0,2,2],[-4,-1,-3],'기세를 꺾고 전리품을 얻었다!','크게 당하고 식량도 빼앗겼다.'),fx('식량을 내준다',0,-2,-3,'굴욕적이지만 목숨은 건졌다.'),ui('소주','한 병 건네며 달랜다',0,1,0,'약탈자가 술에 취해 웃으며 물러났다.')]},
+{t:'배고픔에 상한 통조림을 먹었다. 속이 뒤집힌다.',c:[fx('참고 버틴다',-3,-1,0,'밤새 배를 움켜쥐었다.'),fx('물을 많이 마신다',-1,-1,-1,'조금 나아졌다.')]},
+{t:'낡은 건물 계단이 와르르 무너졌다!',c:[fx('몸을 날려 피한다',-2,0,0,'파편에 긁혔다.'),rq('버텨 본다',.3,[0,2,0],[-4,-1,0],'기적처럼 균형을 잡았다.','추락했다!')]},
+{t:'구름 사이로 따뜻한 햇살이 내려온다.',c:[fx('잠시 누워 쉰다',2,3,0,'오랜만에 평화로운 순간이었다.')]},
+{t:'길가 자판기에서 덜컹 소리와 함께 음료가 쏟아진다.',c:[fx('주워 담는다',0,2,2,'공짜 음료다!')]},
+{t:'쓰러진 군용 트럭 안에 장비 상자가 있다.',c:[ui('쇠지렛대','상자를 연다',2,2,2,'군용 비상식량과 의약품을 얻었다!',1),fx('발로 걷어찬다',-1,0,0,'발만 아프다.')]}
+);
+var AC,M,bgOn=0;
+function beat(k){var o=AC.createOscillator(),q=AC.createGain(),t=AC.currentTime;o.frequency.setValueAtTime(k?55:70,t);o.frequency.exponentialRampToValueAtTime(30,t+.2);q.gain.setValueAtTime(.0001,t);q.gain.exponentialRampToValueAtTime(k?.5:.8,t+.02);q.gain.exponentialRampToValueAtTime(.0001,t+.3);o.connect(q);q.connect(M);o.start(t);o.stop(t+.35)}
+function eerie(){var f=[466,415,311,277][Math.floor(Math.random()*4)],o=AC.createOscillator(),q=AC.createGain(),t=AC.currentTime;o.frequency.value=f;q.gain.setValueAtTime(.0001,t);q.gain.linearRampToValueAtTime(.06,t+1.5);q.gain.linearRampToValueAtTime(.0001,t+4);o.connect(q);q.connect(M);o.start(t);o.stop(t+4.2)}
+function bgm(on){
+ if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return}
+  M=AC.createGain();M.gain.value=0;M.connect(AC.destination);
+  var lp=AC.createBiquadFilter();lp.type='lowpass';lp.frequency.value=380;lp.connect(M);
+  [55,82.4,110.5].forEach(function(f,i){var o=AC.createOscillator();o.type=i?'triangle':'sine';o.frequency.value=f;var q=AC.createGain();q.gain.value=i?.12:.3;o.connect(q);q.connect(lp);o.start();var l=AC.createOscillator();l.frequency.value=.07+i*.03;var lg=AC.createGain();lg.gain.value=3;l.connect(lg);lg.connect(o.frequency);l.start()});
+  var b=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate),d=b.getChannelData(0);for(var i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  var n=AC.createBufferSource();n.buffer=b;n.loop=true;var bp=AC.createBiquadFilter();bp.type='bandpass';bp.frequency.value=500;bp.Q.value=.6;var ng=AC.createGain();ng.gain.value=.05;n.connect(bp);bp.connect(ng);ng.connect(M);n.start();
+  setInterval(function(){if(bgOn){beat(0);setTimeout(function(){beat(1)},260)}},1700);
+  setInterval(function(){if(bgOn&&R(.5))eerie()},4500);
+ }
+ bgOn=on;if(AC.state==='suspended')AC.resume();
+ M.gain.setTargetAtTime(on?.35:0,AC.currentTime,.4);$('snd').textContent=on?'🔊':'🔇';
+}
+$('snd').onclick=function(){bgm(!bgOn)};
+var ART="",LA="";
+function hit(){document.body.classList.add('hit');setTimeout(function(){document.body.classList.remove('hit')},500)}
+function svg(i,c1,c2){return '<svg class="art" viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="장면 일러스트"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c1+'"/><stop offset="1" stop-color="'+c2+'"/></linearGradient></defs><rect width="320" height="110" fill="url(#sk)"/>'+i+'</svg>'}
+var GR='<rect y="92" width="320" height="18" fill="#050805"/>',MN='<circle cx="275" cy="22" r="10" fill="#cfd8b8" opacity=".8"/>',BD='#0b120b';
+function zb(x,s){return '<g transform="translate('+x+',92) scale('+s+')" fill="#060906"><circle cy="-34" r="6"/><rect x="-5" y="-28" width="10" height="20" rx="3"/><path d="M-5-26L-18-20M5-26L18-22" stroke="#060906" stroke-width="4" fill="none"/><rect x="-5" y="-9" width="4" height="9"/><rect x="1" y="-9" width="4" height="9"/><circle cx="-2" cy="-35" r="1" fill="#e22"/><circle cx="2.5" cy="-35" r="1" fill="#e22"/></g>'}
+var SC={
+street:function(){return svg(MN+'<rect x="10" y="40" width="40" height="52" fill="'+BD+'"/><rect x="60" y="28" width="34" height="64" fill="'+BD+'"/><rect x="230" y="45" width="50" height="47" fill="'+BD+'"/>'+GR+zb(150,1)+zb(205,.8),'#1a2a1a','#0b150b')},
+tunnel:function(){return svg('<ellipse cx="160" cy="55" rx="130" ry="52" fill="#050805"/><ellipse cx="160" cy="58" rx="62" ry="27" fill="#0b120b"/><ellipse cx="160" cy="60" rx="18" ry="9" fill="#e8f0b0" opacity=".85"/>'+GR,'#0b100b','#050805')},
+med:function(){return svg(MN+'<rect x="90" y="32" width="140" height="60" fill="'+BD+'"/><path d="M160 42v26M147 55h26" stroke="#3be07a" stroke-width="7"/><rect x="150" y="74" width="20" height="18" fill="#050805"/>'+GR,'#1a2a1a','#0b150b')},
+store:function(){return svg(MN+'<rect x="70" y="38" width="180" height="54" fill="'+BD+'"/><rect x="84" y="58" width="50" height="24" fill="#e8d46a" opacity=".85"/><rect x="186" y="58" width="50" height="24" fill="#e8d46a" opacity=".55"/><text x="160" y="54" fill="#7be08a" font-size="12" font-weight="700" text-anchor="middle">24H</text>'+GR,'#1a2a1a','#0b150b')},
+river:function(){return svg(MN+'<rect y="58" width="320" height="12" fill="#060906"/><rect y="70" width="320" height="40" fill="#0d2230"/><path d="M0 82q20-6 40 0t40 0 40 0 40 0 40 0 40 0 40 0M0 96q20-6 40 0t40 0 40 0 40 0 40 0 40 0 40 0" stroke="#2c5a70" fill="none"/><ellipse cx="275" cy="78" rx="12" ry="3" fill="#cfd8b8" opacity=".5"/>','#16281c','#0a140e')},
+horde:function(){var h='';for(var i=0;i<7;i++)h+=zb(25+i*44+(i%2)*8,.8+(i%3)*.15);return svg(MN+GR+h,'#2a1410','#0b0a08')},
+night:function(){var s='';for(var i=0;i<18;i++)s+='<circle cx="'+(i*37%320)+'" cy="'+(i*23%55+5)+'" r="1" fill="#fff" opacity=".7"/>';return svg(s+GR+'<ellipse cx="160" cy="90" rx="46" ry="8" fill="#e8742a" opacity=".25"/><path d="M160 92q-14-16 0-34q14 18 0 34z" fill="#ff8a2a"/><path d="M160 92q-6-9 0-18q6 9 0 18z" fill="#ffd45a"/>','#05080f','#0b150b')},
+roof:function(){return svg(MN+'<rect x="0" y="60" width="60" height="32" fill="'+BD+'"/><rect x="260" y="52" width="60" height="40" fill="'+BD+'"/><path d="M80 60q10-20 0-40" stroke="#444" stroke-width="4" fill="none" opacity=".5"/><g transform="translate(200,24)"><rect width="24" height="9" rx="4" fill="#050805"/><path d="M-8-3h40M24 4h14" stroke="#050805" stroke-width="2"/></g><rect x="40" y="80" width="240" height="12" fill="#050805"/>','#1a2a1a','#0b150b')},
+bldg:function(){var w='';for(var r=0;r<5;r++)for(var c=0;c<6;c++)w+='<rect x="'+(112+c*18)+'" y="'+(20+r*14)+'" width="10" height="8" fill="'+((r*7+c*3)%5==0?'#e8d46a':'#1c2a1c')+'"/>';return svg(MN+'<rect x="100" y="10" width="120" height="82" fill="'+BD+'"/>'+w+GR+zb(60,.9),'#1a2a1a','#0b150b')}
+};
+var BADGE={황진수:'🍶',심국보:'✂️',필백:'⚾',박광현:'🥫',이영진:'📣',문형준:'👊',유대현:'🚗',양희민:'🐵',탁건:'🎒',나비:'🐱'};
+function sceneFor(ev){var t=ev.t,k='street',bd='';
+ [[/터널/,'tunnel'],[/약국|구급|붕대/,'med'],[/편의점|마트|컵라면|자판기|국밥|포장마차|소주|주점/,'store'],[/강변|낙시|금강|배를/,'river'],[/좀비|골목|무리|약탈/,'horde'],[/모닥|밤|별|추운|영하|하늘/,'night'],[/옥상|헬기|신호|무전/,'roof'],[/건물|계단|아파트|학교|경찰|교회|창고|공장|PC방|노래방/,'bldg']].some(function(r){if(r[0].test(t)){k=r[1];return 1}});
+ for(var n in BADGE)if(t.indexOf(n)>-1){bd='<text x="12" y="34" font-size="28">'+BADGE[n]+'</text>';break}
+ return SC[k]().replace('</svg>',bd+'</svg>')}
+var JI={의사:'🩺',사냥꾼:'🏹',군인:'🎖',요리사:'🍳',정비공:'🔧'};
+function jc(){return S.job?'<span class="chip" style="border-color:var(--ac);color:var(--ac)">'+JI[S.job]+' '+S.job+' Lv'+S.jl+'</span>':''}
+function sk(l,h,m,f,t){return [l+' (3일 쿨)',function(){S.cd=3;g(h,m,f);return t}]}
+var JS={
+의사:function(){return sk('🩺 [의사] 응급 처치·휴식',3+S.jl,1,0,'의사의 손길로 몸과 마음이 회복됐다.')},
+사냥꾼:function(){return ['🏹 [사냥꾼] 사냥에 나선다 (3일 쿨)',function(){S.cd=3;if(R(.75)){g(0,1,3+S.jl);return '멧돼지를 잡았다! 식량이 두두해졌다.'}g(-1,0,1);return '놓쳐지만 토끼 한 마리는 잡았다.'}]},
+군인:function(){return sk('🎖 [군인] 주변을 소탕한다',0,2,2,'좌비를 제압하고 보급품을 확보했다.')},
+요리사:function(){return sk('🍳 [요리사] 따뜻한 요리',2,4,-1,'있는 재료로 근사한 한 끼를 만들었다.')},
+정비공:function(){return ['🔧 [정비공] 부품을 수리·개조 (3일 쿨)',function(){S.cd=3;S.fuel=1;g(0,2,1);return '연료와 부품을 확보했다. 차량 걱정이 없다.'}]}};
+function evc(ev){var a=ev.c.filter(function(c){return !c.show||c.show()});if(S.job&&S.cd<=0)a.push(JS[S.job]());return a}
+function jb(j,l,h,m,f,t){var c=['⭐ ['+j+'] '+l,function(){g(h,m,f);return t}];c.show=function(){return S.job===j};return c}
+function jn(j,t,x){return {ok:function(){return !S.job},w:1,t:t,c:[fx('배운다 (전직: '+j+')',0,2,0,'💼 전직 완료! 이제 당신은 '+j+'다. 이후 모든 이벤트에서 직업 스킬을 쓸 수 있다.',function(){S.job=j;S.jl=1;if(j==='정비공')S.fuel=1}),fx('지금은 되돌아간다',0,0,0,x)]}}
+EV.push(
+jn('의사','무너진 병원 진료실. 흰 가운의 노인이 차트를 정리한다.\n“자네, 응급처치를 배워 볼가?”','노인은 아쉽다는 듯 고개를 끌덕였다.'),
+jn('사냥꾼','산자락 오두막에서 사냥꾼 노인이 활을 손질한다.\n“짐승 쫓는 법, 가르쳐 줄까?”','노인은 활시위를 늦춰 다시 당겼다.'),
+jn('군인','부서진 검문소에서 낙오된 군인이 소총을 닦는다.\n“생존 전투술을 알려 주지.”','군인은 무뎌뎌하게 경례를 했다.'),
+jn('요리사','문 닫은 중국집 주방에서 웹을 휘두르는 요리사.\n“이 시국엔 맛이 사람을 살려.”','요리사가 라면 한 그릇을 쎴 주었다.'),
+jn('정비공','카센터에서 정비공이 엔진 소리를 들어 본다.\n“기계는 거짓말을 안 해.”','정비공은 손을 흔들었다.'),
+{ok:function(){return S.job&&S.jl<2},w:1,t:'오랜 생존으로 기술이 몸에 익었다. 한계를 넘을 기회다.',c:[['혹독하게 수련한다 (2차 전직 도전)',function(){if(R(.7)){S.jl=2;g(-1,2,-1);return '⭐ 2차 전직 성공! 직업 효과가 강화됐다.'}g(-2,0,0);return '실패… 다시 도전할 기회가 있을 거다.'}],fx('지금은 핸만 본다',0,0,0,'다음에 해 보자.')]},
+{t:'좀비에게 물린 사람이 쓰러져 있다. 상처가 깊다.',c:[jb('의사','수술해 살린다',0,4,2,'사람을 살렸다. 답례로 식량을 받았다!'),fx('합장하고 지나간다',0,-2,0,'마음이 무겁다.')]},
+{t:'숲속으로 짐승 발자국이 이어진다.',c:[jb('사냥꾼','추적해 사냥한다',0,2,5,'대형 사슴을 잡았다! 잔치 식량이다.'),rq('따라간다',.3,[0,1,2],[-2,-1,0],'운 좋게 토끼를 잡았다.','숲에서 길을 잃었다.')]},
+{t:'무장 강도 패거리가 식량 창고를 털고 있다.',c:[jb('군인','제압하고 창고를 되찾는다',0,3,4,'손쉽게 제압했다. 창고는 우리 것이다.'),fx('돌아간다',0,-1,0,'위험해 보여 피했다.')]},
+{t:'식재료가 떨어진 식당. 생존자 여럿이 배고프다고 울상이다.',c:[jb('요리사','잡동사니로 대찬치를 만든다',1,5,1,'사람들이 환호했다. 마음이 든든해졌다!'),fx('미안하지만 지나친다',0,-2,0,'배고픔은 남의 일이 아니다.')]},
+{t:'고장 난 발전기가 보인다. 동네 시설의 전력이 끊겼다.',c:[jb('정비공','수리해서 돌린다',0,3,3,'불이 켜졌다! 주민들이 식량을 나눠 줬다.'),fx('지나친다',0,-1,0,'어둠이 깜깜하다.')]}
+);
+function crew(){var s='';
+ if(has('이영준')){var r=Math.random();if(r<.15){g(0,0,2);s+='이영준이 수상한 열매를 따 왔다. ';}else if(r<.3){g(-1,-1,0);s+='이영준이 좀비를 도발해 소동이 났다. ';}else if(r<.35){g(0,0,2);s+='이영준이 뭔가를 훔쳐 왔다. '}}
+ if(has('서하윤')&&S.day%3==0)g(1,0,0);
+ if(has('오지민')&&Math.random()<.2){g(0,0,1);s+='시청자가 후원해 식량을 얻었다. '}
+ if(has('이상현')&&Math.random()<.15){g(0,0,1);s+='이상현이 PC방 창고에서 간식을 찾아냈다. '}
+ return s}
+Object.assign(BADGE,{이상현:'🎮',이영준:'🤪',김병준:'🥋',서하윤:'💉',오지민:'📱',강태리:'🚒'});
+EV.push(
+{w:1,t:'폐PC방. 헤드셋 낀 남자가 모니터만 쎠라본다. 좀비가 어깨 뒤에 있는데도 “아 이 판만 끝내고!” 이상현이다.',c:[fx('헤드셋을 벗기고 끌고 간다',0,2,0,'이상현이 합류했다. “내 정글…” 투덜대지만 은근 든든하다.',function(){join('이상현')}),fx('좀비를 한 마리 던져 준다',-1,3,0,'이상현이 “갱 왔다!” 외치며 폭소했다.'),fx('두고 간다',0,-1,0,'뒤에서 “GG” 소리가 들렸다.')]},
+{w:1,t:'지붕 위에서 누군가 웃으며 춤춘다. “푸하하! 좀비다! 파티다!” 이영준이다.',c:[fx('같이 다닌다 (위험하지만 재밌다)',0,2,0,'이영준이 합류했다. 매일 무슨 일이 벌어질지 모른다.',function(){join('이영준')}),rq('같이 춤춘다',.5,[0,4,0],[-2,0,0],'광기 어린 댄스에 좀비마저 박수친다.','춤추다 넘어졌다.'),fx('눈을 마주치지 않는다',0,0,0,'“또 만나!” 소리가 뒤따랐다.')]},
+{w:1,t:'공원 매트 위에서 도복 입은 남자가 좀비를 암바로 제압 중이다. “가드 패스는 인생이야.” 김병준이다.',c:[['스파링을 청한다',function(){if(R(.5)){join('김병준');g(0,2,0);return '눌렸지만 인정받았다! 김병준이 합류했다.'}g(-2,0,0);return '바닥에 눌렸다. 그래도 배운 게 있다.'}],fx('동료로 영입한다',0,1,-1,'김병준이 합류했다.',function(){join('김병준')}),fx('구경만 한다',0,1,0,'기술이 예술이다.')]},
+{w:1,t:'야전병원 텐트에서 간호사 서하윤이 지친 얼굴로 붕대를 감는다. “사람이 더 필요해요.”',c:[fx('함께 가자고 한다',0,2,0,'서하윤이 합류했다. 의약품 가방도 챙겨 왔다!',function(){join('서하윤');gi('붕대',2)}),fx('붕대만 받는다',0,0,0,'붕대 1개를 받았다.',function(){gi('붕대')})]},
+{w:1,t:'골목에서 삼다리를 세운 여자가 혼잣말한다. “구독자 0명이지만 라이브 갑니다!” 스트리머 오지민이다.',c:[fx('방송에 출연하며 동행한다',0,3,0,'오지민이 합류했다. 시청자 0명이 응원해 준다.',function(){join('오지민')}),fx('카메라를 가린다',0,-1,0,'“초상권!” 하고 소리쳐다.')]},
+{w:1,t:'소방복 입은 여자가 도끼로 철문을 부수고 있다. “다 비켜!” 소방관 강태리다.',c:[fx('함께하자고 한다',0,2,0,'강태리가 합류했다. 든든한 방패다.',function(){join('강태리')}),rq('문 부수는 걸 돕는다',.6,[0,1,3],[-2,0,0],'문 안의 식량을 나눠 가졌다.','파편이 튜었다.')]},
+{ok:function(){return has('이상현')&&has('오지민')},t:'오지민이 이상현의 롤 플레이를 방송한다. 시청자가 3명이나 붙었다!',c:[fx('후원을 받는다',0,4,3,'“치킨 쿠폰 도착!” 쓸 수는 없지만 모두 웃었다.'),fx('티키타카를 즐긴다',0,5,0,'오랜만에 배꼽이 빠지게 웃었다.')]},
+{ok:function(){return has('이영준')},t:'이영준이 갑자기 좀비 무리에 폭죽을 던졌다. “불꽃놀이다!!”',c:[rq('말려 본다',.5,[0,1,0],[-3,-1,0],'가까스로 막았다.','폭죽이 터져 좀비가 몰려왔다!'),fx('같이 즉긴다',-1,4,1,'아수라장 속에서도 즐거웠다.')]},
+{ok:function(){return has('김병준')&&has('문형준')},t:'김병준이 문형준의 멱살을 잡았다. “그거 암바 각이야.” 그대로 대련이 시작됐다.',c:[fx('심판을 본다',0,3,1,'판정승은 무승부. 구경만으로 힘이 났다.'),fx('말린다',-1,0,0,'옛구리를 맞았다.')]},
+{ok:function(){return has('이상현')},t:'이상현이 노트북을 펼다. “한 판에 식량 걸자. 내가 이긴다.”',c:[rq('내기를 한다',.5,[0,3,3],[0,-2,-2],'이긴다! “아 진짜 잠깐” 이상현이 퀢탕이다.','졌다. 식량을 내줘야 한다.'),fx('말린다',0,0,0,'이상현이 아쉬워했다.')]},
+{ok:function(){return has('서하윤')},t:'서하윤이 야간 순찰 중 부상자를 발견했다.',c:[fx('함께 치료한다',2,2,2,'치료를 마친 부상자가 식량을 나눠 줬다.')]},
+{ok:function(){return ['서하윤','오지민','강태리'].filter(has).length>=2},t:'모닥불 옆에서 여자들의 수다가 이어진다. 세상이 망해도 수다는 살아 있다.',c:[fx('유럽히 끼어든다',0,4,0,'웃음소리가 밤공기를 가득 채웠다.')]},
+{ok:function(){return has('이영준')&&has('오지민')},t:'오지민의 라이브 방송에 이영준이 난입했다. 시청자가 폭발했다!',c:[fx('형방 콘텐츠로 밀고 간다',0,5,3,'후원 물자가 쏟아졌다. 시청자 12명!')]}
+);
+Object.assign(E,{
+lol:['🎮 협곡의 챔피언 엔딩','이상현이 팔을 지휘해 요새를 정글처럼 운영했다. “적 넥서스 터진다!” 좀비 떼가 정말 넥서스처럼 터졌다.'],
+crazy:['🤪 이영준의 광인 엔딩','폭죽과 광기로 좋비 지역을 아수라장으로 만들었다. 이영준이 외친다. “인생은 파티다!” 신탄진은 살아남았다. 이상하게.'],
+bjj:['🥋 그라플링 왕국 엔딩','김병준과 문형준이 도장을 열었다. 좀비는 매트 위에서 탭을 친다. 가드 패스는 정말 인생이었다.'],
+trio:['👩‍🚒 여임스 생존팀 엔딩','서하윤의 치료, 오지민의 방송, 강태리의 도끼. 세 사람이 이끄는 생존 커뮤니티에 피난민들이 모여들었다.']
+});
+var PK="";
+var PD={필백:'좌비 관련 피해가 1 줄어듭니다.',이영진:'좀비 관련 피해를 모두 막아 줍니다.',문형준:'특별 패시브는 없지만 조합 이벤트와 격투왕 엔딩의 열쇠입니다.',유대현:'차량을 가졌습니다. 마지막에 연료가 있으면 차로 탈출할 수 있습니다.',양희민:'매일 50% 확률로 식량 +1을 물어옵니다.',탁건:'식량을 이틀에 한 번 더 소모합니다. (짐덩이)',나비:'특별 능력은 없지만 힘들 때 위로가 되는 이벤트가 열립니다.',이상현:'매일 30% 확률로 간식(식량 +1)을 찾습니다. 동료 4명 이상이면 협곡 엔딩이 열립니다.',이영준:'매일 랜덤! 40% 식량 +2, 20% 소동(체력 -1, 정신력 -1)이 벌어집니다.',김병준:'좀비 관련 피해가 1 줄어듭니다. 문형준과 함께면 조합 이벤트가 열립니다.',서하윤:'매일 체력이 1 회복됩니다.',오지민:'매일 40% 확률로 시청자 후원(식량 +1)이 들어옵니다.',강태리:'좀비 관련 피해가 1 줄어듭니다.'};
+function pk(){if(!PK)return '';var t='\n\n🤝 '+PK+' 합류!\n✨ 능력: '+(PD[PK]||'');PK='';return t}
+Object.assign(PD,{필백:'좀비 피해를 가끔(약 40%) 1 줄여줍니다.',이영진:'좀비 피해를 가끔(약 40%) 막아 줍니다.',김병준:'좀비 피해를 가끔 1 줄여줍니다. 문형준과 함께면 조합 이벤트가 열립니다.',강태리:'좀비 피해를 가끔 1 줄여줍니다.',서하윤:'3일마다 체력이 1 회복됩니다.',양희민:'가끔(약 25%) 식량 +1을 물어옵니다.',오지민:'가끔(약 20%) 후원으로 식량 +1을 얻습니다.',이상현:'가끔(약 15%) 간식을 찾습니다. 동료 4명 이상이면 협곡 엔딩이 열립니다.',이영준:'매일 랜덤! 20% 식량 +2, 15% 소동(체력 -1, 정신력 -1).'});
+function xtra(ch,n,b){
+ var z=function(id){return b?'zombie':id},P=function(l,f){ch.push([l,function(){end(f())}])};
+ P('🌉 금강 다리를 건넌다',function(){return z(n>=2&&S.hp>=6?'bridge':'bridgef')});
+ P('🌅 아무것도 안 하고 일출을 본다',function(){return z(S.mind>=8?'sunrise':'sunrise2')});
+ if(S.job==='의사')P('🩺 야전병원을 세운다',function(){return 'hospital'});
+ if(S.job==='사냥꾼')P('🏹 산에 들어가 사냥하며 산다',function(){return z(S.hp>=5?'mount':'walkd')});
+ if(S.job==='군인')P('🎖 군 재집결 지점으로 향한다',function(){return z(n>=3?'army':'army2')});
+ if(S.job==='요리사')P('🍳 폐식당을 열어 개업한다',function(){return z(S.food>=6?'diner':'alone')});
+ if(S.job==='정비공')P('🚂 버려진 열차를 고쳐 탄다',function(){return z(S.jl>=2||R(.5)?'train':'walk')});
+ if(has('오지민'))P('📱 전국 라이브로 구조를 요청한다',function(){return z(n>=3?'live':'live2')});
+ if(has('양희민'))P('🐵 원숭이를 따라 비밀길로 간다',function(){return z('secret')});
+ if(has('나비'))P('🐱 나비와 함께 조용히 떠난다',function(){return z('cat')});
+ if(S.dr>=1)P('🍶 한잔하고 운명에 맡긴다',function(){return z('toast')});
+}
+Object.assign(E,{
+bridge:['🌉 다리 너머 엔딩','부서진 금강대교를 동료들과 건넜다. 건너편에서 누군가 손전등을 흔들었다.'],
+bridgef:['🌉 무너진 다리 엔딩','다리는 생각보다 많이 부서져 있었다. 한 걸음 헛디디자 강물이 차올랐다.'],
+sunrise:['🌅 일출 엔딩','모든 걸 내려놓고 앉았다. 해가 뜨자 이상하게 편안했다. 살아 있다는 것만으로 충분했다.'],
+sunrise2:['🌅 불안한 아침 엔딩','일출은 아름다웠지만 마음은 불안했다. 해가 완전히 뜬 뒤에야 좀비 소리가 들렸다.'],
+hospital:['🏥 야전병원 엔딩','폐건물에 병원을 세웠다. 환자는 끊이지 않았고, 신탄진의 의사로 불리게 됐다.'],
+mount:['🏔 산사람 엔딩','산속 오두막에서 사냥하며 살았다. 좀비는 오르지 못했다. 조용한 삶이 시작됐다.'],
+army:['🎖 재집결 엔딩','군 부대 깃발이 보였다. 동료들과 함께 경례했다. 신탄진 수복 작전이 시작됐다.'],
+army2:['🎖 낙오병 엔딩','집결지는 이미 비어 있었다. 혼자 남은 군인은 총을 닦으며 다음 신호를 기다렸다.'],
+diner:['🍳 신탄진 식당 엔딩','국밥 냄새가 퍼지자 생존자들이 모였다. 세상 끝에서도 식당은 문을 열었다.'],
+train:['🚂 철도 탈출 엔딩','고친 열차가 기적을 울렸다. 선로 위를 달리며 좀비는 점점 작아졌다.'],
+live:['📱 전국 생중계 엔딩','오지민의 라이브 시청자가 폭발했다. 구조대가 방송을 보고 찾아왔다.'],
+live2:['📱 방송 종료 엔딩','시청자는 몇 명 없었다. 배터리가 꺼지자 화면이 까맣게 변했다.'],
+secret:['🐵 원숭이의 비밀길 엔딩','양희민이 이끈 길 끝에 군 벙커가 있었다. 아무도 몰랐던 안전지대였다.'],
+cat:['🐱 고양이와 함께 엔딩','나비를 안고 걸었다. 어딘가에서 분명 따뜻한 집이 기다리고 있을 것이다.'],
+toast:['🍶 건배 엔딩','소주 한 잔을 마시고 눈을 감았다. 운명은 생각보다 다정했다.']
+});
+var FD={};try{FD=JSON.parse(localStorage.getItem("sj_end")||"{}")}catch(e){}
+function sv(){try{localStorage.setItem("sj_end",JSON.stringify(FD))}catch(e){}}
+function rm(n){S.p=S.p.filter(function(x){return x!==n})}
+function pickEv(){var p=[];EV.forEach(function(e,i){if(S.used[i]||(e.ok&&!e.ok()))return;p.push(i);if(e.ok)p.push(i);if(e.w)p.push(i,i)});if(!p.length){S.used={};return pickEv()}var i=p[Math.floor(Math.random()*p.length)];S.used[i]=1;return EV[i]}
+function codex(){var k=Object.keys(E);$("view").innerHTML='<div class="card"><div class="tag">📖 엔딩 도감 '+Object.keys(FD).length+'/'+k.length+'</div><p class="story">'+k.map(function(i){return FD[i]?E[i][0]:"❓ ???"}).join("\n")+'</p></div>';var b=document.createElement("button");b.className="ch go";b.textContent="돌아가기";b.onclick=render;$("view").appendChild(b)}
+function init(){LA="";S={hp:10,mind:10,food:8,day:0,p:[],used:{},fuel:0,bg:0,dr:0,sig:0,bunker:0,gun:0,kind:0,lv:0,bite:0,it:{붕대:1},job:0,jl:1,cd:0,scr:"pro",note:""}}
+function stats(){items();
+ $("day").textContent=S.day?"DAY "+Math.min(S.day,30)+" / 30":"프롤로그";
+ var a=[["❤ 체력",S.hp,10],["🧠 정신력",S.mind,10],["🍙 식량",S.food,12]];
+ $("stats").innerHTML=a.map(function(x){return '<div class="st"><small>'+x[0]+'</small><strong>'+x[1]+'</strong><div class="bar"><i style="width:'+x[1]/x[2]*100+'%"></i></div></div>'}).join("");
+ $("party").innerHTML=S.p.length?S.p.map(function(n){return '<span class="chip">'+n+'</span>'}).join(""):'<span style="color:var(--mut);font-size:14px">동료 없음</span>';
+}
+function show(tag,txt,choices,extra){
+ var v=$("view");
+ v.innerHTML='<div class="card">'+ART+'<div class="tag">'+tag+'</div><p class="story">'+txt+'</p>'+(extra||"")+'</div>';
+ choices.forEach(function(c){var b=document.createElement("button");b.className="ch"+(c[2]?" go":"");b.textContent=c[0];b.onclick=c[1];v.appendChild(b)});
+ ART="";stats();window.scrollTo(0,0);
+}
+function dead(){return S.hp<=0?"hp":(S.mind<=0?"mind":null)}
+function ending(id){
+ var e=E[id];FD[id]=1;sv();stats();
+ $("view").innerHTML='<div class="card end"><div class="tag">'+e[0]+'</div><p class="story">'+e[1]+'</p></div>';
+ var b=document.createElement("button");b.className="ch go";b.textContent="처음부터 다시 하기";b.onclick=function(){init();render()};
+ $("view").appendChild(b);window.scrollTo(0,0);
+}
+function pick(tag,fn,after){
+ var b=[S.hp,S.mind,S.food],r=(PK="",fn())+pk(),a=[S.hp,S.mind,S.food],n=["체력","정신력","식량"],d="";
+ for(var i=0;i<3;i++){var x=a[i]-b[i];if(x)d+='<span class="'+(x>0?"up":"dn")+'">'+n[i]+" "+(x>0?"+":"")+x+"</span>"}
+ var k=dead();
+ if(a[0]<b[0])hit();ART=LA;show(tag,r,[["다음",function(){if(k)return ending(k);after()},1]],d?'<div class="delta">'+d+"</div>":"");
+}
+function nextDay(){
+ var note="",f=(S.day%3==0?1:0)+(has("탁건")&&S.day%2?1:0);
+ S.food-=f;
+ if(S.food<0){S.food=0;g(-1,0,0);note="굶주림으로 체력 -1. "}
+ if(has("양희민")&&Math.random()<.25){g(0,0,1);note+="양희민이 먹을 것을 물어왔다. "}
+ S.cd--;note+=crew();if(S.job==="의사"){g(S.jl,0,0);if(S.bite&&R(.6))S.bite=0}if(S.job==="요리사"&&S.day%3==0)g(0,0,1);if(S.job==="사냥꾼"&&R(.4))g(0,0,1);S.note=note;S.day++;if(S.dr>=3)return ending("drunk");
+ var k=dead();if(k)return ending(k);
+ S.day>30?final():event();
+}
+function event(){
+ var ev=pickEv();LA=sceneFor(ev);ART=LA;
+ var tx=(S.note?"["+S.note.trim()+"]\n\n":"")+ev.t;
+ show("DAY "+S.day,tx,evc(ev).map(function(c){return [c[0],function(){pick("DAY "+S.day,c[1],nextDay)}]}));
+}
+function final2(){
+ var n=S.p.length,b=S.bite,ch=[];
+ ch.push(['🚗 차로 대전을 노린다',function(){end(b?'zombie':has('유대현')?(S.fuel?(n>=4?'convoy':has('양희민')?'trip':'car'):'stall'):(S.hp>=6?'walk':'walkd'))}]);
+ ch.push(['🚤 금강에서 배를 띄운다',function(){end(b?'zombie':R(Math.min(.9,.45+n*.1+(S.mind>=7?.1:0)))?(has('양희민')&&n>=2?'mkboat':S.mind>=9?'calm':'boat'):(has('탁건')?'tak':'sunk'))}]);
+ ch.push(['🏰 신탄진에 남아 버틴다',function(){end(b?'zombie':n>=6?'allstar':has('이상현')&&n>=4?'lol':has('이영준')&&n>=3?'crazy':has('김병준')&&has('문형준')?'bjj':has('서하윤')&&has('오지민')&&has('강태리')?'trio':has('필백')&&has('문형준')&&n>=4?'fighter':S.gun&&n>=2?'snipe':S.kind>=2?'family':S.lv&&n>=2?'romance':S.food>=10?'hoard':has('양희민')&&n>=2?'mk':n>=3?'fort':n==0&&S.mind>=8?'hermit':'alone')}]);
+ ch.push(['🥾 군 대피소까지 걸어간다',function(){end(b?'zombie':S.hp>=9&&S.mind>=9?'legend':S.hp>=8?'shelter':S.hp>=4?'shelter2':'walkd')}]);
+ if(S.sig)ch.push(['🚁 옥상에서 신호탄을 쏜다',function(){end('heli')}]);
+ if(S.bunker)ch.push(['🕳 벙커에 틀어박힌다',function(){end('bunker')}]);
+ xtra(ch,n,b);show('DAY 30 · 마지막 갈림길','30일째. 신탄진 외곽에서 길이 갈라진다.\n지금까지의 선택이 결과를 가른다.',ch);
+}
+function final(){return final2()}function final_old(){
+ show("DAY 14 · 마지막 갈림길","신탄진 외곽, 세 갈래 길이 나온다.\n지금까지의 선택이 결과를 가른다.",[
+  ["🚗 차로 대전 방면을 노린다",function(){end(has("유대현")?(S.fuel?"car":"stall"):(S.hp>=6?"walk":"walkd"))}],
+  ["🚤 금강에서 배를 띄운다",function(){end(R(Math.min(.9,.3+S.p.length*.12+(S.mind>=7?.1:0)))?"boat":"sunk")}],
+  ["🏰 신탄진에 남아 버틴다",function(){end(has("양희민")&&S.p.length>=2?"mk":(S.p.length>=3?"fort":"alone"))}]]);
+}
+function end(id){ending(id)}
+function render(){
+ if(S.scr==="pro"){
+  show("PROLOGUE",PRO,[["📖 엔딩 도감 ("+Object.keys(FD).length+"/"+Object.keys(E).length+")",codex],["살아남기 시작한다",function(){bgm(1);
+   var st=STARTS[Math.floor(Math.random()*STARTS.length)];
+   show("첫 번째 선택",st.t,sh(st.c.slice()).map(function(c){return [c[0],function(){S.day=0;pick("첫 번째 선택",c[1],function(){S.day=1;event()})}]}));
+  },1]]);
+ }
+}
+init();render();
+</script>
+</body>
+</html>
